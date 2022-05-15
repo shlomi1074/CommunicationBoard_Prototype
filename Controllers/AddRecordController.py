@@ -21,6 +21,12 @@ class AddRecordController(QMainWindow):
             return
         if self.RecordText.text() is '' or self.RecordText.text() is "" or self.RecordText.text() is None:
             return
+        records = get_user_records(self.profile_name)
+        for record in records:
+            if record[2] == self.RecordName.text():
+                self.ErrorMsgLabel.setVisible(True)
+                self.ErrorMsgLabel.setText(f"כבר קיימת הקלטה בשם {self.RecordName.text()}. אנא נסה שם אחר")
+                return
 
         res = add_record(self.profile_name, self.RecordName.text(), self.RecordText.text(), "apple")
         if res:
