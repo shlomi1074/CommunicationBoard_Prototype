@@ -11,18 +11,21 @@ class GridLabel(QLabel):
         super().__init__(parent)
         self.name = name
         self.text = text
-        self.pixmap = r'.\Resources\apple-icon.png'
+        self.pixmap = pixmap
         self.setPixmap(QPixmap(self.pixmap))
+        self.parent = parent
 
     def mouseReleaseEvent(self, event):
-        temp = self.name.replace(" ", "")
-        sound_name = temp + ".mp3"
+        sound_name = "output.mp3"
+        if os.path.exists(sound_name):
+            os.remove(sound_name)
         try:
-            tts = gTTS(self.text, lang='iw', slow=True)
+            print(self.parent.checkBox.isChecked())
+            tts = gTTS(self.text, lang='iw', slow=self.parent.checkBox.isChecked())
             tts.save(sound_name)
             playsound(sound_name)
-            if os.path.exists(sound_name):
-                os.remove(sound_name)
-        except:
-            if os.path.exists(sound_name):
-                os.remove(sound_name)
+        except Exception as e:
+            print("failed to play audio " + str(e))
+
+
+

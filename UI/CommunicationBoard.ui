@@ -41,36 +41,70 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QWidget" name="gridLayoutWidget">
+   <widget class="QWidget" name="widget" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>140</y>
-      <width>1021</width>
-      <height>501</height>
+      <x>30</x>
+      <y>70</y>
+      <width>1041</width>
+      <height>571</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout" columnstretch="0">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetFixedSize</enum>
+    <widget class="QPushButton" name="AddAudioButton">
+     <property name="geometry">
+      <rect>
+       <x>930</x>
+       <y>30</y>
+       <width>100</width>
+       <height>30</height>
+      </rect>
      </property>
-     <property name="spacing">
-      <number>6</number>
+     <property name="text">
+      <string>הוסף הקלטה</string>
      </property>
-    </layout>
-   </widget>
-   <widget class="QPushButton" name="AddAudioButton">
-    <property name="geometry">
-     <rect>
-      <x>960</x>
-      <y>90</y>
-      <width>100</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>הוסף הקלטה</string>
-    </property>
+    </widget>
+    <widget class="QWidget" name="gridLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>1021</width>
+       <height>491</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" rowstretch="0">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+     </layout>
+    </widget>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="geometry">
+      <rect>
+       <x>820</x>
+       <y>35</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="text">
+      <string>דיבור איטי</string>
+     </property>
+     <property name="tristate">
+      <bool>false</bool>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>
