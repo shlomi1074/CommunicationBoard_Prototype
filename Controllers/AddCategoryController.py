@@ -3,25 +3,24 @@ import os
 from PyQt5 import uic, QtCore, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QLabel
 
-import Controllers.CommunicationBoardScreen
+import Controllers.CategoryController
 from CustomWidgets.AddRecordGridLabel import AddRecordGridLabel
 from Database.DBQueries import *
 
-global selected_icon
-class AddRecordController(QMainWindow):
-    def __init__(self, profile_name, category, parent):
+
+class AddCategoryController(QMainWindow):
+    def __init__(self, profile_name, parent):
         super().__init__()
         # LOAD UI FILE
-        self.ui = uic.loadUi(r".\UI\AddRecordingScreen.ui", self)
+        self.ui = uic.loadUi(r".\UI\AddCategoryScreen.ui", self)
         self.setFixedSize(900, 765)
         self.profile_name = profile_name
-        self.AddRecorButton.clicked.connect(self.add_record_to_db)
+        self.AddCategoryButton.clicked.connect(self.add_category_to_db)
         self.parentScreen = parent
         self.ErrorMsgLabel.setVisible(False)
         self.row = 1
         self.col = 1
         self.icons_dir = r"E:\python\BoardCommunication\Resources\Icons"
-        self.category = category
 
         self.layout = QtWidgets.QHBoxLayout(self)
         self.scrollArea = QtWidgets.QScrollArea(self)
@@ -33,29 +32,30 @@ class AddRecordController(QMainWindow):
         self.layout.addWidget(self.scrollArea)
         self.load_grid()
 
-    def add_record_to_db(self):
-        if self.RecordName.text() is '' or self.RecordName.text() is "" or self.RecordName.text() is None:
+    def add_category_to_db(self):
+        if self.CategoryName.text() is '' or self.CategoryName.text() is None or self.selectedIcon.text() is '':
             return
-        if self.RecordText.text() is '' or self.RecordText.text() is "" or self.RecordText.text() is None:
+        if self.CategoryName.text() is '' or self.CategoryName.text() is None or self.selectedIcon.text() is '':
             return
-        records = get_user_records(self.profile_name)
-        for record in records:
-            if record[2] == self.RecordName.text():
+
+        categories = get_user_categories(self.profile_name)
+        for category in categories:
+            if category[1] == self.CategoryName.text():
                 self.ErrorMsgLabel.setVisible(True)
-                self.ErrorMsgLabel.setText(f"כבר קיימת הקלטה בשם {self.RecordName.text()}. אנא נסה שם אחר")
+                self.ErrorMsgLabel.setText(f"כבר קיימת קטגוריה בשם {self.CategoryName.text()}. אנא נסה שם אחר")
                 return
 
-        res = add_record(self.profile_name, self.RecordName.text(), self.RecordText.text(),
-                         os.path.join(self.icons_dir, self.selectedIcon.text()), self.category)
+        res = add_category(self.profile_name, self.CategoryName.text(),
+                           os.path.join(self.icons_dir, self.selectedIcon.text()))
         if res:
             print("added")
             self.parentScreen.close()
-            main = Controllers.CommunicationBoardScreen.CommunicationBoardController(self.profile_name, self.category)
+            main = Controllers.CategoryController.CategoryController(self.profile_name)
             main.show()
             self.close()
         else:
             self.ErrorMsgLabel.setVisible(True)
-            self.ErrorMsgLabel.setText("הייתה בעיה בהוספת ההקלטה. אנא נסו שוב")
+            self.ErrorMsgLabel.setText("הייתה בעיה בהוספת הקטגוריה. אנא נסו שוב")
 
     def load_grid(self):
         for filename in os.listdir(self.icons_dir):
@@ -75,10 +75,6 @@ class AddRecordController(QMainWindow):
             ll.setFixedWidth(100)
             ll.setScaledContents(True)
             ll.setAlignment(QtCore.Qt.AlignCenter)
-            # vl.addWidget(ll)
-            # ll = QLabel(label, self)
-            # ll.setAlignment(QtCore.Qt.AlignCenter)
-            # vl.addWidget(ll)
             self.gridLayout.addWidget(ll, self.row, self.col, 1, 1)
             self.col += 1
         except Exception as e:

@@ -10,9 +10,11 @@ def create_database():
         cur = con.cursor()
         # Create table
         cur.execute('''CREATE TABLE IF NOT EXISTS profile_data
-                       (profileName text, iconName text, recordingName text, recordingText)''')
+                       (profileName text, iconName text, recordingName text, recordingText text, category text)''')
         cur.execute('''CREATE TABLE IF NOT EXISTS profiles
                        (profileName text PRIMARY KEY)''')
+        cur.execute('''CREATE TABLE IF NOT EXISTS categories
+                       (profileName text, category text, icon text)''')
 
         # Save (commit) the changes
         con.commit()
@@ -31,6 +33,7 @@ def delete_tables():
         cur = con.cursor()
         cur.execute("DROP TABLE profile_data")
         cur.execute("DROP TABLE profiles")
+        cur.execute("DROP TABLE categories")
         con.commit()
         con.close()
         return True

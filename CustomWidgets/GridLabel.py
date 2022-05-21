@@ -20,8 +20,7 @@ class GridLabel(QLabel):
         if os.path.exists(sound_name):
             os.remove(sound_name)
         try:
-            print(self.parent.checkBox.isChecked())
-            tts = gTTS(self.text, lang='iw', slow=self.parent.checkBox.isChecked())
+            tts = gTTS(self.text, lang='iw', slow=False)
             tts.save(sound_name)
             playsound(sound_name)
         except Exception as e:

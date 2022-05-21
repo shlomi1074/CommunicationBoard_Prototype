@@ -4,24 +4,25 @@ from functools import partial
 
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget
-from CustomWidgets.GridLabel import GridLabel
-from Database.DBQueries import *
-from Controllers.AddRecordController import AddRecordController
-import Controllers.CategoryController
 
-class CommunicationBoardController(QMainWindow):
-    def __init__(self, profile_name, category):
+from Controllers.AddCategoryController import AddCategoryController
+import Controllers.ProfileScreen
+from CustomWidgets.CategoryGridLabel import CategoryGridLabel
+from Database.DBQueries import *
+
+
+class CategoryController(QMainWindow):
+    def __init__(self, profile_name):
         super().__init__()
         # LOAD UI FILE
-        self.ui = uic.loadUi(r".\UI\CommunicationBoard.ui", self)
+        self.ui = uic.loadUi(r".\UI\CategoryScreen.ui", self)
         self.setFixedSize(1100, 650)
         self.profile_name = profile_name
-        self.label.setText(f'לוח התקשורת של {profile_name} - קטגוריית {category}')
-        self.record_screen = None
+        self.label.setText(f'לוח התקשורת של {profile_name}')
+        self.category_screen = None
         self.this_screen = None
         self.row = 1
         self.col = 1
-        self.category = category
 
         self.layout = QtWidgets.QHBoxLayout(self)
         self.scrollArea = QtWidgets.QScrollArea(self)
@@ -32,28 +33,21 @@ class CommunicationBoardController(QMainWindow):
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.layout.addWidget(self.scrollArea)
         self.load_grid()
-        self.AddAudioButton.clicked.connect(self.open_add_record_screen)
-        self.BackButton.clicked.connect(self.back_to_categories_screen)
+        self.AddCategoryButton.clicked.connect(self.open_add_category_screen)
+        self.BackButton.clicked.connect(self.back_to_profile_screen)
 
     def closeEvent(self, event):
         print('close event')
-        self.delete_temp_content()
         event.accept()
 
-    def delete_temp_content(self):
-        folder = 'temp'
-        for filename in os.listdir(folder):
-            file_path = os.path.join(folder, filename)
-            try:
-                if os.path.isfile(file_path) or os.path.islink(file_path):
-                    os.unlink(file_path)
-                elif os.path.isdir(file_path):
-                    shutil.rmtree(file_path)
-            except Exception as e:
-                print('Failed to delete %s. Reason: %s' % (file_path, e))
+    def open_add_category_screen(self):
+        if self.category_screen is not None:
+            self.category_screen.close()
+        self.category_screen = AddCategoryController(self.profile_name, self)
+        self.category_screen.show()
 
-    def back_to_categories_screen(self):
-        profile_screen = Controllers.CategoryController.CategoryController(self.profile_name)
+    def back_to_profile_screen(self):
+        profile_screen = Controllers.ProfileScreen.ProfileScreenController()
         profile_screen.show()
         self.close()
 
@@ -61,22 +55,12 @@ class CommunicationBoardController(QMainWindow):
         for i in reversed(range(self.gridLayout.count())):
             self.gridLayout.itemAt(i).widget().setParent(None)
 
-        self.add_grid_item("כן", "כן", r".\Resources\Icons\yes.png", False)
-        self.add_grid_item("לא", "לא", r".\Resources\Icons\no.png", False)
-
-        records = get_user_category_records(self.profile_name, self.category)
+        records = get_user_categories(self.profile_name)
 
         for record in records:
-            self.add_grid_item(record[2], record[3], record[1])
+            self.add_grid_item(record[1], record[2], record[1])
 
-    def open_add_record_screen(self):
-        self.delete_temp_content()
-        if self.record_screen is not None:
-            self.record_screen.close()
-        self.record_screen = AddRecordController(self.profile_name, self.category, self)
-        self.record_screen.show()
-
-    def add_grid_item(self, label, text, image, is_deleteable=True):
+    def add_grid_item(self, label, image, is_deleteable=True):
         if self.col >= 7:
             self.col = 1
             self.row += 1
@@ -88,7 +72,7 @@ class CommunicationBoardController(QMainWindow):
             vl = QVBoxLayout(v_widget)
             vl.setSpacing(0)
 
-            ll = GridLabel(label, text, image, self)
+            ll = CategoryGridLabel(label, image, self)
             ll.setFixedHeight(150)
             ll.setFixedWidth(150)
             ll.setScaledContents(True)
@@ -100,9 +84,9 @@ class CommunicationBoardController(QMainWindow):
             ll.setFont(QtGui.QFont("MS Shell Dlg 2", weight=QtGui.QFont.Bold))
             vl.addWidget(ll)
             if is_deleteable:
-                ll = QLabel("מחק הקלטה", self)
+                ll = QLabel("מחק קטגוריה", self)
                 ll.setStyleSheet("color: red;")
-                ll.mousePressEvent = partial(self.delete_record, label)
+                ll.mousePressEvent = partial(self.delete_category, label)
                 ll.setAlignment(QtCore.Qt.AlignCenter)
                 ll.setFixedWidth(150)
                 ll.setFont(QtGui.QFont("MS Shell Dlg 2", weight=QtGui.QFont.Bold))
@@ -115,12 +99,13 @@ class CommunicationBoardController(QMainWindow):
         except Exception as e:
             print(e)
 
-    def delete_record(self, record_name, event):
-        print(record_name)
-        RES = delete_user_category_record(self.profile_name, record_name, self.category)
+    def delete_category(self, category_name, event):
+        RES = delete_user_category(self.profile_name, category_name)
+        if RES:
+            RES = delete_category(self.profile_name, category_name)
         print(RES)
         if RES:
-            self.this_screen = CommunicationBoardController(self.profile_name, self.category)
+            self.this_screen = CategoryController(self.profile_name)
             self.this_screen.show()
             self.close()
 

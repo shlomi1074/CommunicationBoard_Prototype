@@ -35,36 +35,36 @@
      </font>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>קטגוריות</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="AddAudioButton">
+   <widget class="QPushButton" name="AddCategoryButton">
     <property name="geometry">
      <rect>
-      <x>960</x>
+      <x>950</x>
       <y>65</y>
-      <width>100</width>
+      <width>111</width>
       <height>30</height>
      </rect>
     </property>
     <property name="text">
-     <string>הוסף הקלטה</string>
+     <string>הוסף קטגוריה</string>
     </property>
    </widget>
    <widget class="QPushButton" name="BackButton">
     <property name="geometry">
      <rect>
-      <x>790</x>
+      <x>780</x>
       <y>65</y>
       <width>151</width>
       <height>30</height>
      </rect>
     </property>
     <property name="text">
-     <string>חזור לבחירת קטגוריה</string>
+     <string>חזור לבחירת פרופיל</string>
     </property>
    </widget>
   </widget>

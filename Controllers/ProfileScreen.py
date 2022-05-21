@@ -1,8 +1,9 @@
-from PyQt5 import uic, Qt
+from PyQt5 import uic, Qt, QtCore
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from Controllers.CommunicationBoardScreen import CommunicationBoardController
+
+from Controllers.CategoryController import CategoryController
 from Database.DBMgmt import *
 from Database.DBQueries import *
 
@@ -18,6 +19,10 @@ class ProfileScreenController(QMainWindow):
         print(directory)
         self.ui = uic.loadUi(r".\UI\ProfileScreen.ui", self)
         self.setFixedSize(800, 600)
+        # LOAD TAB WIDGET CSS FILE
+        with open('Resources/CSS/ComboBox.css', "r") as fh:
+            tw = fh.read()
+            self.ProfileComboBox.setStyleSheet(tw)
         create_database()
         self.load_combobox_data()
 
@@ -25,7 +30,7 @@ class ProfileScreenController(QMainWindow):
 
         self.AddProfileButton.clicked.connect(self.add_profile_button_click)
         self.DeleteProfileButton.clicked.connect(self.delete_profile_button_click)
-        self.LoadBoardButton.clicked.connect(self.load_board_button_click)
+        self.LoadBoardButton.clicked.connect(self.load_categories_button_click)
 
     def add_profile_button_click(self):
         self.ErrorLabel.setVisible(True)
@@ -43,6 +48,7 @@ class ProfileScreenController(QMainWindow):
         if res:
             print("profile created")
             self.ErrorLabel.setText("הפרופיל נוצר בהצלחה")
+            self.ProfileLineEdit.setText("")
 
         else:
             self.ErrorLabel.setText("אירעה שגיאה ביצירת הפרופיל")
@@ -60,7 +66,7 @@ class ProfileScreenController(QMainWindow):
                 if res:
                     print("profile deleted")
                     self.ErrorLabel.setText("הפרופיל נמחק בהצלחה")
-
+                    self.ProfileLineEdit.setText("")
                     for p in get_profile_names():
                         print(p)
                 else:
@@ -73,24 +79,28 @@ class ProfileScreenController(QMainWindow):
     def load_combobox_data(self):
         self.ProfileComboBox.clear()
         self.ProfileComboBox.setEditable(True)
-
-        profile_names = get_profile_names()
-        profile_names.insert(0, 'בחר פרופיל')
-        self.ProfileComboBox.addItems(profile_names)
         # getting the line edit of combo box
         line_edit = self.ProfileComboBox.lineEdit()
 
         # setting line edit alignment to the center
-        line_edit.setAlignment(Qt.AlignCenter)
+        line_edit.setAlignment(QtCore.Qt.AlignCenter)
+
+        profile_names = get_profile_names()
+        profile_names.insert(0, 'בחר פרופיל')
+        self.ProfileComboBox.addItems(profile_names)
+
+        for i in range(self.ProfileComboBox.count()):
+            self.ProfileComboBox.setItemData(i, QtCore.Qt.AlignCenter, QtCore.Qt.ItemDataRole.TextAlignmentRole)
 
         # setting line edit to read only
         line_edit.setReadOnly(True)
 
-    def load_board_button_click(self):
+
+    def load_categories_button_click(self):
         content = self.ProfileComboBox.currentText()
         if content is None or content == '' or content == 'בחר פרופיל':
             return
-        self.main = CommunicationBoardController(content)
+        self.main = CategoryController(content)
         self.main.show()
         self.close()
 

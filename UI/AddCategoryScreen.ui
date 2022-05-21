@@ -18,7 +18,7 @@
     <normaloff>../Resources/icon.png</normaloff>../Resources/icon.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="RecordName">
+   <widget class="QLineEdit" name="CategoryName">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -28,20 +28,7 @@
      </rect>
     </property>
     <property name="placeholderText">
-     <string>הכנס את שם ההקלטה</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="RecordText">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>190</y>
-      <width>811</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string>הכנס את הטקסט שיהיה בהקלטה</string>
+     <string>הכנס את שם הקטגוריה</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -61,23 +48,23 @@
      </font>
     </property>
     <property name="text">
-     <string>הוספת הקלטה</string>
+     <string>הוספת קטגוריה</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="AddRecorButton">
+   <widget class="QPushButton" name="AddCategoryButton">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>390</x>
       <y>670</y>
-      <width>100</width>
+      <width>121</width>
       <height>30</height>
      </rect>
     </property>
     <property name="text">
-     <string>הוסף הקלטה</string>
+     <string>הוסף קטגוריה</string>
     </property>
    </widget>
    <widget class="QLabel" name="ErrorMsgLabel">
@@ -100,7 +87,7 @@
     <property name="geometry">
      <rect>
       <x>736</x>
-      <y>260</y>
+      <y>190</y>
       <width>121</width>
       <height>20</height>
      </rect>
@@ -114,15 +101,15 @@
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>בחר תמונה להקלטה:</string>
+     <string>בחר תמונה לקטגוריה:</string>
     </property>
    </widget>
    <widget class="QLabel" name="selectedIcon">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>260</y>
-      <width>121</width>
+      <x>570</x>
+      <y>190</y>
+      <width>161</width>
       <height>20</height>
      </rect>
     </property>
@@ -133,6 +120,9 @@
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
   </widget>
