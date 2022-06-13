@@ -3,7 +3,8 @@ import shutil
 from functools import partial
 
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
-from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QFileDialog
 
 from Controllers.AddCategoryController import AddCategoryController
 import Controllers.ProfileScreen
@@ -23,6 +24,8 @@ class CategoryController(QMainWindow):
         self.this_screen = None
         self.row = 1
         self.col = 1
+        self.profile_picture_bytes = None
+        self.load_profile_picture()
 
         self.layout = QtWidgets.QHBoxLayout(self)
         self.scrollArea = QtWidgets.QScrollArea(self)
@@ -35,6 +38,7 @@ class CategoryController(QMainWindow):
         self.load_grid()
         self.AddCategoryButton.clicked.connect(self.open_add_category_screen)
         self.BackButton.clicked.connect(self.back_to_profile_screen)
+        self.profileIcon.mousePressEvent = self.select_profile_picture
 
     def closeEvent(self, event):
         print('close event')
@@ -54,6 +58,11 @@ class CategoryController(QMainWindow):
     def load_grid(self):
         for i in reversed(range(self.gridLayout.count())):
             self.gridLayout.itemAt(i).widget().setParent(None)
+
+        self.add_grid_item("פעילויות יומיות", r".\Resources\Icons\alarm.png", False)
+        self.add_grid_item("אוכל", r".\Resources\Icons\restaurant.png", False)
+        self.add_grid_item("תקשורת", r".\Resources\Icons\icons8-communicate-80.png", False)
+
 
         records = get_user_categories(self.profile_name)
 
@@ -81,7 +90,7 @@ class CategoryController(QMainWindow):
             ll = QLabel(label, self)
             ll.setAlignment(QtCore.Qt.AlignCenter)
             ll.setFixedWidth(150)
-            ll.setFont(QtGui.QFont("MS Shell Dlg 2", weight=QtGui.QFont.Bold))
+            ll.setFont(QtGui.QFont("MS Shell Dlg 2", 10, weight=QtGui.QFont.Bold))
             vl.addWidget(ll)
             if is_deleteable:
                 ll = QLabel("מחק קטגוריה", self)
@@ -89,7 +98,7 @@ class CategoryController(QMainWindow):
                 ll.mousePressEvent = partial(self.delete_category, label)
                 ll.setAlignment(QtCore.Qt.AlignCenter)
                 ll.setFixedWidth(150)
-                ll.setFont(QtGui.QFont("MS Shell Dlg 2", weight=QtGui.QFont.Bold))
+                ll.setFont(QtGui.QFont("MS Shell Dlg 2", 10, weight=QtGui.QFont.Bold))
                 vl.addWidget(ll)
             self.gridLayout.addWidget(v_widget, self.row, self.col, 1, 1)
             self.gridLayout.setColumnStretch(self.col % 5, 1)
@@ -108,4 +117,19 @@ class CategoryController(QMainWindow):
             self.this_screen = CategoryController(self.profile_name)
             self.this_screen.show()
             self.close()
+
+    def select_profile_picture(self, event):
+        image_path, _ = QFileDialog.getOpenFileName(self, 'Select Profile Picture', 'c:\\', "Image files (*.jpg *.png *.jpeg)")
+        if image_path != '' and image_path is not None:
+            update_user_profile_picture(self.profile_name, image_path)
+            self.load_profile_picture()
+
+    def load_profile_picture(self):
+        try:
+            self.profile_picture_bytes = get_user_profile_picture(self.profile_name)
+            qp = QPixmap()
+            qp.loadFromData(self.profile_picture_bytes)
+            self.profileIcon.setPixmap(qp)
+        except Exception as e:
+            print("exp: " + str(e))
 

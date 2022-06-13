@@ -12,7 +12,7 @@ def create_database():
         cur.execute('''CREATE TABLE IF NOT EXISTS profile_data
                        (profileName text, iconName text, recordingName text, recordingText text, category text)''')
         cur.execute('''CREATE TABLE IF NOT EXISTS profiles
-                       (profileName text PRIMARY KEY)''')
+                       (profileName text PRIMARY KEY, profileImagePath BLOB NOT NULL)''')
         cur.execute('''CREATE TABLE IF NOT EXISTS categories
                        (profileName text, category text, icon text)''')
 

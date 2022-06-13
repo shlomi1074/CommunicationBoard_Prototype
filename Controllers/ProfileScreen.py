@@ -1,4 +1,4 @@
-from PyQt5 import uic, Qt, QtCore
+from PyQt5 import uic, Qt, QtCore, QtGui
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -20,9 +20,9 @@ class ProfileScreenController(QMainWindow):
         self.ui = uic.loadUi(r".\UI\ProfileScreen.ui", self)
         self.setFixedSize(800, 600)
         # LOAD TAB WIDGET CSS FILE
-        with open('Resources/CSS/ComboBox.css', "r") as fh:
-            tw = fh.read()
-            self.ProfileComboBox.setStyleSheet(tw)
+        # with open('Resources/CSS/ComboBox.css', "r") as fh:
+        #     tw = fh.read()
+        #     self.ProfileComboBox.setStyleSheet(tw)
         create_database()
         self.load_combobox_data()
 
@@ -87,14 +87,32 @@ class ProfileScreenController(QMainWindow):
 
         profile_names = get_profile_names()
         profile_names.insert(0, 'בחר פרופיל')
-        self.ProfileComboBox.addItems(profile_names)
+
+        # size
+        size = QSize(30, 30)
+
+        # setting icon size
+        self.ProfileComboBox.setIconSize(size)
+
+        for profile_name in profile_names:
+            if profile_name == 'בחר פרופיל':
+                self.ProfileComboBox.addItem(profile_name)
+                continue
+            try:
+                qp = QPixmap()
+                t = get_user_profile_picture(profile_name)
+                qp.loadFromData(t)
+                qicon = QIcon()
+                qicon.addPixmap(qp)
+                self.ProfileComboBox.addItem(qicon, profile_name)
+            except Exception as e:
+                print("Failed to load_combobox_data: " + str(e))
 
         for i in range(self.ProfileComboBox.count()):
             self.ProfileComboBox.setItemData(i, QtCore.Qt.AlignCenter, QtCore.Qt.ItemDataRole.TextAlignmentRole)
 
         # setting line edit to read only
         line_edit.setReadOnly(True)
-
 
     def load_categories_button_click(self):
         content = self.ProfileComboBox.currentText()

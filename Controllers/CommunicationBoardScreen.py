@@ -97,7 +97,7 @@ class CommunicationBoardController(QMainWindow):
             ll = QLabel(label, self)
             ll.setAlignment(QtCore.Qt.AlignCenter)
             ll.setFixedWidth(150)
-            ll.setFont(QtGui.QFont("MS Shell Dlg 2", weight=QtGui.QFont.Bold))
+            ll.setFont(QtGui.QFont("MS Shell Dlg 2", 10, weight=QtGui.QFont.Bold))
             vl.addWidget(ll)
             if is_deleteable:
                 ll = QLabel("מחק הקלטה", self)
@@ -105,7 +105,7 @@ class CommunicationBoardController(QMainWindow):
                 ll.mousePressEvent = partial(self.delete_record, label)
                 ll.setAlignment(QtCore.Qt.AlignCenter)
                 ll.setFixedWidth(150)
-                ll.setFont(QtGui.QFont("MS Shell Dlg 2", weight=QtGui.QFont.Bold))
+                ll.setFont(QtGui.QFont("MS Shell Dlg 2", 10, weight=QtGui.QFont.Bold))
                 vl.addWidget(ll)
             self.gridLayout.addWidget(v_widget, self.row, self.col, 1, 1)
             self.gridLayout.setColumnStretch(self.col % 5, 1)
