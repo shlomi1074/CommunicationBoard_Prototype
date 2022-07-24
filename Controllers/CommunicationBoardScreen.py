@@ -38,6 +38,11 @@ class CommunicationBoardController(QMainWindow):
     def closeEvent(self, event):
         print('close event')
         self.delete_temp_content()
+
+        sound_name = os.getcwd() + r"\\output.mp3"
+        sound_name = sound_name.replace("\\", "/")
+        if os.path.exists(sound_name):
+            os.remove(sound_name)
         event.accept()
 
     def delete_temp_content(self):

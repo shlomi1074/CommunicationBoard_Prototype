@@ -20,7 +20,7 @@ class AddRecordController(QMainWindow):
         self.ErrorMsgLabel.setVisible(False)
         self.row = 1
         self.col = 1
-        self.icons_dir = r"E:\python\BoardCommunication\Resources\Icons"
+        self.icons_dir = r".\Resources\Icons"
         self.category = category
 
         self.layout = QtWidgets.QHBoxLayout(self)

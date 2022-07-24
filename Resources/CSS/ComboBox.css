@@ -40,7 +40,7 @@ QComboBox::drop-down {
 }
 
 QComboBox::down-arrow {
-    image: url(E:\python\BoardCommunication\Resources\arrow-down.svg);
+    image: url(.\Resources\arrow-down.svg);
 }
 
 QComboBox::down-arrow:on { /* shift the arrow when popup is open */

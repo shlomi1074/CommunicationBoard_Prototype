@@ -1,10 +1,11 @@
 import os
-
+import gtts
+import playsound
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QLabel
 from gtts import gTTS
 from playsound import playsound
-
+import os
 
 class GridLabel(QLabel):
     def __init__(self,  name, text, pixmap, parent=None):
@@ -16,7 +17,8 @@ class GridLabel(QLabel):
         self.parent = parent
 
     def mouseReleaseEvent(self, event):
-        sound_name = "output.mp3"
+        sound_name = os.getcwd() + r"\output.mp3"
+        sound_name = sound_name.replace("\\", "/")
         if os.path.exists(sound_name):
             os.remove(sound_name)
         try:
