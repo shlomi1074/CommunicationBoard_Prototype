@@ -1,6 +1,6 @@
 import os
 
-from PyQt5 import uic, QtCore, QtWidgets
+from PyQt5 import uic, QtCore, QtWidgets, Qt
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QLabel
 
 import Controllers.CommunicationBoardScreen
@@ -13,7 +13,7 @@ class AddRecordController(QMainWindow):
         super().__init__()
         # LOAD UI FILE
         self.ui = uic.loadUi(r".\UI\AddRecordingScreen.ui", self)
-        self.setFixedSize(900, 765)
+        self.setFixedSize(1000, 800)
         self.profile_name = profile_name
         self.AddRecorButton.clicked.connect(self.add_record_to_db)
         self.parentScreen = parent
@@ -22,11 +22,12 @@ class AddRecordController(QMainWindow):
         self.col = 1
         self.icons_dir = r".\Resources\Icons"
         self.category = category
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
         self.layout = QtWidgets.QHBoxLayout(self)
         self.scrollArea = QtWidgets.QScrollArea(self)
         self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setGeometry(40, 280, 820, 380)
+        self.scrollArea.setGeometry(40, 220, 920, 480)
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
@@ -65,16 +66,18 @@ class AddRecordController(QMainWindow):
                 self.add_grid_item(filename, f)
 
     def add_grid_item(self, label, image):
-        if self.col >= 8:
+        if self.col >= 7:
             self.col = 1
             self.row += 1
         try:
             # vl = QVBoxLayout()
             ll = AddRecordGridLabel(label, image, self)
-            ll.setFixedHeight(100)
-            ll.setFixedWidth(100)
+            ll.setFixedHeight(120)
+            ll.setFixedWidth(120)
             ll.setScaledContents(True)
             ll.setAlignment(QtCore.Qt.AlignCenter)
+            ll.setStyleSheet("border: 2px solid black;")
+
             # vl.addWidget(ll)
             # ll = QLabel(label, self)
             # ll.setAlignment(QtCore.Qt.AlignCenter)

@@ -15,10 +15,11 @@ class ProfileScreenController(QMainWindow):
         # LOAD UI FILE
         import os
         directory = os.getcwd()
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+        self.setFixedSize(1000, 700)
 
         print(directory)
         self.ui = uic.loadUi(r".\UI\ProfileScreen.ui", self)
-        self.setFixedSize(800, 600)
         # LOAD TAB WIDGET CSS FILE
         # with open('Resources/CSS/ComboBox.css', "r") as fh:
         #     tw = fh.read()

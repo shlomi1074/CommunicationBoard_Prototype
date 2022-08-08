@@ -1,6 +1,6 @@
 import os
 
-from PyQt5 import uic, QtCore, QtWidgets
+from PyQt5 import uic, QtCore, QtWidgets, Qt
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QLabel
 
 import Controllers.CategoryController
@@ -13,7 +13,7 @@ class AddCategoryController(QMainWindow):
         super().__init__()
         # LOAD UI FILE
         self.ui = uic.loadUi(r".\UI\AddCategoryScreen.ui", self)
-        self.setFixedSize(900, 765)
+        self.setFixedSize(1000, 800)
         self.profile_name = profile_name
         self.AddCategoryButton.clicked.connect(self.add_category_to_db)
         self.parentScreen = parent
@@ -21,11 +21,12 @@ class AddCategoryController(QMainWindow):
         self.row = 1
         self.col = 1
         self.icons_dir = r".\Resources\Icons"
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
         self.layout = QtWidgets.QHBoxLayout(self)
         self.scrollArea = QtWidgets.QScrollArea(self)
         self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setGeometry(40, 280, 820, 380)
+        self.scrollArea.setGeometry(40, 190, 920, 450)
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
@@ -75,6 +76,7 @@ class AddCategoryController(QMainWindow):
             ll.setFixedWidth(100)
             ll.setScaledContents(True)
             ll.setAlignment(QtCore.Qt.AlignCenter)
+            ll.setStyleSheet("border: 2px solid black;")
             self.gridLayout.addWidget(ll, self.row, self.col, 1, 1)
             self.col += 1
         except Exception as e:

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1100</width>
-    <height>650</height>
+    <width>1200</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
      <rect>
       <x>100</x>
       <y>0</y>
-      <width>911</width>
+      <width>981</width>
       <height>71</height>
      </rect>
     </property>
@@ -44,7 +44,7 @@
    <widget class="QPushButton" name="AddCategoryButton">
     <property name="geometry">
      <rect>
-      <x>815</x>
+      <x>890</x>
       <y>70</y>
       <width>140</width>
       <height>40</height>
@@ -67,7 +67,7 @@
    <widget class="QPushButton" name="BackButton">
     <property name="geometry">
      <rect>
-      <x>635</x>
+      <x>710</x>
       <y>70</y>
       <width>170</width>
       <height>40</height>
@@ -90,7 +90,7 @@
    <widget class="QLabel" name="profileIcon">
     <property name="geometry">
      <rect>
-      <x>965</x>
+      <x>1040</x>
       <y>9</y>
       <width>100</width>
       <height>100</height>

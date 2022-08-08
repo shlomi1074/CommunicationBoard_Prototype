@@ -2,7 +2,7 @@ import os
 import shutil
 from functools import partial
 
-from PyQt5 import uic, QtCore, QtWidgets, QtGui
+from PyQt5 import uic, QtCore, QtWidgets, QtGui, Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QFileDialog
 
@@ -17,7 +17,7 @@ class CategoryController(QMainWindow):
         super().__init__()
         # LOAD UI FILE
         self.ui = uic.loadUi(r".\UI\CategoryScreen.ui", self)
-        self.setFixedSize(1100, 650)
+        self.setFixedSize(1200, 700)
         self.profile_name = profile_name
         self.label.setText(f'לוח התקשורת של {profile_name}')
         self.category_screen = None
@@ -26,11 +26,13 @@ class CategoryController(QMainWindow):
         self.col = 1
         self.profile_picture_bytes = None
         self.load_profile_picture()
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
         self.layout = QtWidgets.QHBoxLayout(self)
         self.scrollArea = QtWidgets.QScrollArea(self)
         self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setGeometry(35, 110, 1030, 500)
+        self.scrollArea.setGeometry(35, 113, 1125, 550)
+
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
@@ -77,7 +79,7 @@ class CategoryController(QMainWindow):
         try:
             v_widget = QWidget(self)
             v_widget.setFixedWidth(160)
-            v_widget.setFixedHeight(200)
+            v_widget.setFixedHeight(235)
             vl = QVBoxLayout(v_widget)
             vl.setSpacing(0)
 
@@ -85,6 +87,8 @@ class CategoryController(QMainWindow):
             ll.setFixedHeight(150)
             ll.setFixedWidth(150)
             ll.setScaledContents(True)
+            ll.setMargin(3)
+            ll.setStyleSheet("border: 1px solid black;")
             ll.setAlignment(QtCore.Qt.AlignCenter)
             vl.addWidget(ll)
             ll = QLabel(label, self)

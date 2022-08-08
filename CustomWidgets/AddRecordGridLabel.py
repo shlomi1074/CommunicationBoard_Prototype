@@ -14,7 +14,10 @@ class AddRecordGridLabel(QLabel):
     def mouseReleaseEvent(self, event):
         for i in reversed(range(self.parent.gridLayout.count())):
             self.parent.gridLayout.itemAt(i).widget().setFrameStyle(QFrame.NoFrame)
-        self.setFrameStyle(QFrame.Box)
+            self.parent.gridLayout.itemAt(i).widget().setStyleSheet("border: 2px solid black;")
+
+        self.setStyleSheet("border: 4px solid red;")
+
         self.parent.selectedIcon.setText(self.name)
 
 

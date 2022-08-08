@@ -3,7 +3,7 @@ import shutil
 from functools import partial
 
 from PyQt5 import uic, QtCore, QtWidgets, QtGui, Qt
-from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QFrame
+from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget
 from CustomWidgets.GridLabel import GridLabel
 from Database.DBQueries import *
 from Controllers.AddRecordController import AddRecordController
@@ -13,6 +13,7 @@ class CommunicationBoardController(QMainWindow):
     def __init__(self, profile_name, category):
         super().__init__()
         # LOAD UI FILE
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.ui = uic.loadUi(r".\UI\CommunicationBoard.ui", self)
         self.setFixedSize(1200, 700)
         self.profile_name = profile_name
@@ -22,12 +23,11 @@ class CommunicationBoardController(QMainWindow):
         self.row = 1
         self.col = 1
         self.category = category
-        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
         self.layout = QtWidgets.QHBoxLayout(self)
         self.scrollArea = QtWidgets.QScrollArea(self)
         self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setGeometry(35, 110, 1125, 550)
+        self.scrollArea.setGeometry(35, 110, 1030, 500)
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
@@ -48,18 +48,15 @@ class CommunicationBoardController(QMainWindow):
 
     def delete_temp_content(self):
         folder = 'temp'
-        try:
-            for filename in os.listdir(folder):
-                file_path = os.path.join(folder, filename)
-                try:
-                    if os.path.isfile(file_path) or os.path.islink(file_path):
-                        os.unlink(file_path)
-                    elif os.path.isdir(file_path):
-                        shutil.rmtree(file_path)
-                except Exception as e:
-                    print('Failed to delete %s. Reason: %s' % (file_path, e))
-        except Exception as e:
-            pass
+        for filename in os.listdir(folder):
+            file_path = os.path.join(folder, filename)
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                print('Failed to delete %s. Reason: %s' % (file_path, e))
 
     def back_to_categories_screen(self):
         profile_screen = Controllers.CategoryController.CategoryController(self.profile_name)
@@ -72,30 +69,6 @@ class CommunicationBoardController(QMainWindow):
 
         self.add_grid_item("כן", "כן", r".\Resources\Icons\yes.png", False)
         self.add_grid_item("לא", "לא", r".\Resources\Icons\no.png", False)
-
-        #food category
-        if self.category == "אוכל":
-            self.add_grid_item("אני רוצה לאכול", "אני רוצה לאכול", r".\Resources\Icons\icons8-voice-recognition-80.png", False)
-            self.add_grid_item("אני רוצה לשתות", "אני רוצה לשתות", r".\Resources\Icons\icons8-voice-recognition-80.png",False)
-            self.add_grid_item("פיצה", "פיצה", r".\Resources\Icons\icons8-pizza-80.png",
-                               True)
-            self.add_grid_item("מים", "מים", r".\Resources\Icons\icons8-bottle-of-water-80.png",
-                               True)
-
-        #comunication category
-        if self.category == "תקשורת":
-            self.add_grid_item(f" שלום אני {self.profile_name}", f" שלום אני {self.profile_name}", r".\Resources\Icons\chat.png",
-                               False)
-            self.add_grid_item("היי", "היי",
-                               r".\Resources\Icons\chat.png",
-                               False)
-
-        #Daily tasks
-        if self.category == "פעילויות יומיות":
-            self.add_grid_item("כואב לי", "כואב לי", r".\Resources\Icons\medicine.png",True)
-            self.add_grid_item("אני עייף", "אני עייף", r".\Resources\Icons\sleeping.png", True)
-            self.add_grid_item("אני צריך לשירותים", "אני צריך לשירותים", r".\Resources\Icons\toilet-paper.png", True)
-            self.add_grid_item("מה השעה?", "מה השעה?", r".\Resources\Icons\alarm.png", True)
 
         records = get_user_category_records(self.profile_name, self.category)
 
@@ -125,8 +98,6 @@ class CommunicationBoardController(QMainWindow):
             ll.setFixedHeight(150)
             ll.setFixedWidth(150)
             ll.setScaledContents(True)
-            ll.setMargin(3)
-            ll.setStyleSheet("border: 1px solid black;")
             ll.setAlignment(QtCore.Qt.AlignCenter)
             vl.addWidget(ll)
             ll = QLabel(label, self)
@@ -142,7 +113,6 @@ class CommunicationBoardController(QMainWindow):
                 ll.setFixedWidth(150)
                 ll.setFont(QtGui.QFont("MS Shell Dlg 2", 10, weight=QtGui.QFont.Bold))
                 vl.addWidget(ll)
-
             self.gridLayout.addWidget(v_widget, self.row, self.col, 1, 1)
             self.gridLayout.setColumnStretch(self.col % 5, 1)
             self.gridLayout.setRowStretch(self.row, 1)

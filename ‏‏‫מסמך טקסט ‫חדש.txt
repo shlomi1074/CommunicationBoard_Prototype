@@ -1,1 +1,1 @@
-pyinstaller -F --paths=C:\Users\Shlomi\AppData\Local\Programs\Python\Python37\Lib\site-packages --hidden-import gtts --hidden-import playsound main.py
+pyinstaller -F --paths=C:\Users\Shlomi\AppData\Local\Programs\Python\Python37\Lib\site-packages --hidden-import gtts --hidden-import playsound --noconsole --name=BoardCommunication main.py
