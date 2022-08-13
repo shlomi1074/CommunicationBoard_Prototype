@@ -16,7 +16,7 @@ class ProfileScreenController(QMainWindow):
         import os
         directory = os.getcwd()
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.setFixedSize(1000, 700)
+        self.setFixedSize(1200, 700)
 
         print(directory)
         self.ui = uic.loadUi(r".\UI\ProfileScreen.ui", self)

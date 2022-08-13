@@ -15,7 +15,7 @@ class CommunicationBoardController(QMainWindow):
         # LOAD UI FILE
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.ui = uic.loadUi(r".\UI\CommunicationBoard.ui", self)
-        self.setFixedSize(1200, 700)
+        self.setFixedSize(1200, 1000)
         self.profile_name = profile_name
         self.label.setText(f'לוח התקשורת של {profile_name} - קטגוריית {category}')
         self.record_screen = None

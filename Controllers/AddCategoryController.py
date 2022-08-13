@@ -13,7 +13,7 @@ class AddCategoryController(QMainWindow):
         super().__init__()
         # LOAD UI FILE
         self.ui = uic.loadUi(r".\UI\AddCategoryScreen.ui", self)
-        self.setFixedSize(1000, 800)
+        self.setFixedSize(1200, 900)
         self.profile_name = profile_name
         self.AddCategoryButton.clicked.connect(self.add_category_to_db)
         self.parentScreen = parent
@@ -26,7 +26,7 @@ class AddCategoryController(QMainWindow):
         self.layout = QtWidgets.QHBoxLayout(self)
         self.scrollArea = QtWidgets.QScrollArea(self)
         self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setGeometry(40, 190, 920, 450)
+        self.scrollArea.setGeometry(40, 250, 1120, 500)
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
@@ -66,14 +66,14 @@ class AddCategoryController(QMainWindow):
                 self.add_grid_item(filename, f)
 
     def add_grid_item(self, label, image):
-        if self.col >= 8:
+        if self.col >= 7:
             self.col = 1
             self.row += 1
         try:
             # vl = QVBoxLayout()
             ll = AddRecordGridLabel(label, image, self)
-            ll.setFixedHeight(100)
-            ll.setFixedWidth(100)
+            ll.setFixedHeight(150)
+            ll.setFixedWidth(150)
             ll.setScaledContents(True)
             ll.setAlignment(QtCore.Qt.AlignCenter)
             ll.setStyleSheet("border: 2px solid black;")

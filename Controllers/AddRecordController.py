@@ -13,7 +13,7 @@ class AddRecordController(QMainWindow):
         super().__init__()
         # LOAD UI FILE
         self.ui = uic.loadUi(r".\UI\AddRecordingScreen.ui", self)
-        self.setFixedSize(1000, 800)
+        self.setFixedSize(1200, 900)
         self.profile_name = profile_name
         self.AddRecorButton.clicked.connect(self.add_record_to_db)
         self.parentScreen = parent
@@ -27,7 +27,7 @@ class AddRecordController(QMainWindow):
         self.layout = QtWidgets.QHBoxLayout(self)
         self.scrollArea = QtWidgets.QScrollArea(self)
         self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setGeometry(40, 220, 920, 480)
+        self.scrollArea.setGeometry(40, 250, 1120, 500)
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
@@ -72,8 +72,8 @@ class AddRecordController(QMainWindow):
         try:
             # vl = QVBoxLayout()
             ll = AddRecordGridLabel(label, image, self)
-            ll.setFixedHeight(120)
-            ll.setFixedWidth(120)
+            ll.setFixedHeight(150)
+            ll.setFixedWidth(150)
             ll.setScaledContents(True)
             ll.setAlignment(QtCore.Qt.AlignCenter)
             ll.setStyleSheet("border: 2px solid black;")

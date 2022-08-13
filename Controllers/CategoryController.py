@@ -17,7 +17,7 @@ class CategoryController(QMainWindow):
         super().__init__()
         # LOAD UI FILE
         self.ui = uic.loadUi(r".\UI\CategoryScreen.ui", self)
-        self.setFixedSize(1200, 700)
+        self.setFixedSize(1200, 900)
         self.profile_name = profile_name
         self.label.setText(f'לוח התקשורת של {profile_name}')
         self.category_screen = None
@@ -31,7 +31,7 @@ class CategoryController(QMainWindow):
         self.layout = QtWidgets.QHBoxLayout(self)
         self.scrollArea = QtWidgets.QScrollArea(self)
         self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setGeometry(35, 113, 1125, 550)
+        self.scrollArea.setGeometry(35, 200, 1125, 650)
 
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
@@ -72,20 +72,20 @@ class CategoryController(QMainWindow):
             self.add_grid_item(record[1], record[2], record[1])
 
     def add_grid_item(self, label, image, is_deleteable=True):
-        if self.col >= 7:
+        if self.col >= 6:
             self.col = 1
             self.row += 1
 
         try:
             v_widget = QWidget(self)
-            v_widget.setFixedWidth(160)
+            v_widget.setFixedWidth(190)
             v_widget.setFixedHeight(235)
             vl = QVBoxLayout(v_widget)
-            vl.setSpacing(0)
+            vl.setSpacing(5)
 
             ll = CategoryGridLabel(label, image, self)
-            ll.setFixedHeight(150)
-            ll.setFixedWidth(150)
+            ll.setFixedHeight(180)
+            ll.setFixedWidth(180)
             ll.setScaledContents(True)
             ll.setMargin(3)
             ll.setStyleSheet("border: 1px solid black;")
@@ -93,7 +93,7 @@ class CategoryController(QMainWindow):
             vl.addWidget(ll)
             ll = QLabel(label, self)
             ll.setAlignment(QtCore.Qt.AlignCenter)
-            ll.setFixedWidth(150)
+            ll.setFixedWidth(180)
             ll.setFont(QtGui.QFont("MS Shell Dlg 2", 10, weight=QtGui.QFont.Bold))
             vl.addWidget(ll)
             if is_deleteable:
@@ -101,11 +101,11 @@ class CategoryController(QMainWindow):
                 ll.setStyleSheet("color: red;")
                 ll.mousePressEvent = partial(self.delete_category, label)
                 ll.setAlignment(QtCore.Qt.AlignCenter)
-                ll.setFixedWidth(150)
+                ll.setFixedWidth(180)
                 ll.setFont(QtGui.QFont("MS Shell Dlg 2", 10, weight=QtGui.QFont.Bold))
                 vl.addWidget(ll)
             self.gridLayout.addWidget(v_widget, self.row, self.col, 1, 1)
-            self.gridLayout.setColumnStretch(self.col % 5, 1)
+            self.gridLayout.setColumnStretch(self.col % 6, 1)
             self.gridLayout.setRowStretch(self.row, 1)
 
             self.col += 1

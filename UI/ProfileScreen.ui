@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
+    <width>1200</width>
     <height>700</height>
    </rect>
   </property>
@@ -26,7 +26,7 @@
    <widget class="QComboBox" name="ProfileComboBox">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>460</x>
       <y>150</y>
       <width>280</width>
       <height>60</height>
@@ -95,7 +95,7 @@ QComboBox::QListView::item::selected{
    <widget class="QPushButton" name="AddProfileButton">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>610</x>
       <y>530</y>
       <width>170</width>
       <height>40</height>
@@ -118,7 +118,7 @@ QComboBox::QListView::item::selected{
    <widget class="QPushButton" name="DeleteProfileButton">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>420</x>
       <y>530</y>
       <width>170</width>
       <height>40</height>
@@ -141,7 +141,7 @@ QComboBox::QListView::item::selected{
    <widget class="QLineEdit" name="ProfileLineEdit">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>420</x>
       <y>480</y>
       <width>360</width>
       <height>30</height>
@@ -160,7 +160,7 @@ QComboBox::QListView::item::selected{
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>460</x>
       <y>40</y>
       <width>280</width>
       <height>50</height>
@@ -204,7 +204,7 @@ QComboBox::QListView::item::selected{
    <widget class="QPushButton" name="LoadBoardButton">
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>520</x>
       <y>230</y>
       <width>160</width>
       <height>40</height>
@@ -227,7 +227,7 @@ QComboBox::QListView::item::selected{
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>375</x>
+      <x>475</x>
       <y>400</y>
       <width>250</width>
       <height>51</height>
@@ -250,7 +250,7 @@ QComboBox::QListView::item::selected{
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>100</x>
       <y>330</y>
       <width>1001</width>
       <height>31</height>
