@@ -78,8 +78,8 @@ class CategoryController(QMainWindow):
 
         try:
             v_widget = QWidget(self)
-            v_widget.setFixedWidth(190)
-            v_widget.setFixedHeight(235)
+            v_widget.setFixedWidth(195)
+            v_widget.setFixedHeight(245)
             vl = QVBoxLayout(v_widget)
             vl.setSpacing(5)
 
